@@ -195,4 +195,4 @@ When contributing changes, keep CV data handling, configuration, and PDF generat
 
 ## License
 
-See the `LICENSE` file for the terms under which this project can be used, modified, and distributed.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
