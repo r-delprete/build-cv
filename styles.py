@@ -43,7 +43,6 @@ TOP_BAR_HEIGHT = LAYOUT.top_bar_height_mm * mm
 FOOTER_BOTTOM = LAYOUT.footer_bottom_mm * mm
 SKILLS_LABEL_WIDTH = LAYOUT.skills_label_column_mm * mm
 
-FONT_DIR = Path("/usr/share/fonts/truetype/crosextra/")
 FONT_FAMILY = TYPO.font_family
 
 base = ParagraphStyle(
