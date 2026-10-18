@@ -8,6 +8,7 @@ import math
 import re
 from dataclasses import dataclass, fields
 from pathlib import Path
+from typing import Any, TypeVar
 
 from reportlab.lib.pagesizes import A3, A4, A5, LEGAL, LETTER
 
@@ -105,6 +106,13 @@ class AppConfig:
     layout: LayoutConfig  # Page and layout settings.
 
 
+T = TypeVar(
+    "T",
+    ThemeConfig,
+    TypographyConfig,
+    LayoutConfig
+)
+
 PAGE_SIZES = {
     "A3": A3,
     "A4": A4,
@@ -115,10 +123,55 @@ PAGE_SIZES = {
 
 HEX_COLOR = re.compile(r"#[0-9A-Fa-f]{6}$")
 
+NON_NUMERIC_FIELDS = {
+    "typography": {"font_family", "body_justified"},
+    "layout": {"page_size"},
+}
 
-def _build_section(section_name: str, section_type: type, data: dict):
+POSITIVE_FIELDS = {
+    "left_margin_mm",
+    "right_margin_mm",
+    "top_margin_mm",
+    "bottom_margin_mm",
+    "photo_size_mm",
+    "header_photo_column_mm",
+    "skills_label_column_mm",
+    "top_bar_height_mm"
+}
+
+POSITIVE_TYPOGRAPHY_FIELDS = {
+    "body_size",
+    "body_leading",
+    "name_size",
+    "name_leading",
+    "role_size",
+    "role_leading",
+    "contact_size",
+    "contact_leading",
+    "section_size",
+    "section_leading",
+    "subsection_size",
+    "heading_size",
+    "heading_leading",
+    "meta_size",
+    "meta_leading",
+    "tech_size",
+    "small_size",
+    "small_leading",
+    "footer_font_size",
+    "section_rule_thickness"
+}
+
+
+def _build_section(
+    section_name: str,
+    section_type: type[T],
+    data: dict[str, Any],
+) -> T:
     if not isinstance(data, dict):
-        raise TypeError(f"Section '{section_name}' must be JSON object")
+        raise TypeError(
+            f"Section '{section_name}' must be a JSON object."
+        )
 
     expected = {field.name for field in fields(section_type)}
     received = set(data)
@@ -127,35 +180,43 @@ def _build_section(section_name: str, section_type: type, data: dict):
     missing = expected - received
 
     if unknown:
-        raise ValueError(f"Unknown keys in '{section_name}': "
-                         f"{', '.join(sorted(unknown))}")
+        raise ValueError(
+            f"Unknown keys in '{section_name}': "
+            f"{', '.join(sorted(unknown))}"
+        )
 
     if missing:
-        raise ValueError(f"Missing keys in '{section_name}': "
-                         f"{', '.join(sorted(missing))}")
+        raise ValueError(
+            f"Missing keys in '{section_name}': "
+            f"{', '.join(sorted(missing))}"
+        )
 
     try:
         return section_type(**data)
     except TypeError as exc:
         raise ValueError(
-            f"Config not valid for section " f"'{section_name}': {exc}") from exc
+            f"Invalid configuration for section '{section_name}': {exc}"
+        ) from exc
 
 
-def validate_config(config: AppConfig):
+def validate_config(config: AppConfig) -> None:
     # Color check
     for field in fields(config.theme):
         value = getattr(config.theme, field.name)
 
         if not isinstance(value, str) or not HEX_COLOR.fullmatch(value):
             raise ValueError(
-                f"Color not valid '{field.name}': {value!r}. " f"Use #RRGGBB format.")
+                f"Invalid color for '{field.name}': {value!r}. " f"Use #RRGGBB format.")
 
     # Page format check
+    if not isinstance(config.layout.page_size, str):
+        raise TypeError("'layout.page_size' must be a string.")
+
     if config.layout.page_size not in PAGE_SIZES:
-        supported = ', '.join(PAGE_SIZES)
+        supported = ", ".join(PAGE_SIZES)
         raise ValueError(
-            f"Page format not supported: {config.layout.page_size}. "
-            f"Use one of: {supported}"
+            f"Unsupported page format: {config.layout.page_size!r}. "
+            f"Supported formats: {supported}"
         )
 
     # Number values check
@@ -163,26 +224,15 @@ def validate_config(config: AppConfig):
         ("typography", config.typography),
         ("layout", config.layout),
     ):
+        excluded_fields = NON_NUMERIC_FIELDS[section_name]
+
         for field in fields(section):
+            if field.name in excluded_fields:
+                continue
+
             value = getattr(section, field.name)
 
-            if section_name == "typography" and field.name in {
-                "font_family",
-                "body_justified"
-            }:
-                continue
-
-            if section_name == "layout" and field.name in {
-                "page_size"
-            }:
-                continue
-
-            if isinstance(value, bool):
-                raise TypeError(
-                    f"'{section_name}.{field.name}' must be a number."
-                )
-
-            if not isinstance(value, (int, float)):
+            if isinstance(value, bool) or not isinstance(value, (int, float)):
                 raise TypeError(
                     f"'{section_name}.{field.name}' must be a number."
                 )
@@ -194,46 +244,12 @@ def validate_config(config: AppConfig):
                 )
 
     # Positive numbers check
-    positive_fields = {
-        "left_margin_mm",
-        "right_margin_mm",
-        "top_margin_mm",
-        "bottom_margin_mm",
-        "photo_size_mm",
-        "header_photo_column_mm",
-        "skills_label_column_mm",
-        "top_bar_height_mm"
-    }
-
-    for name in positive_fields:
+    for name in POSITIVE_FIELDS:
         value = getattr(config.layout, name)
         if value <= 0:
             raise ValueError(f"'layout.{name}' must be greater than zero.")
 
-    positive_typography_fields = {
-        "body_size",
-        "body_leading",
-        "name_size",
-        "name_leading",
-        "role_size",
-        "role_leading",
-        "contact_size",
-        "contact_leading",
-        "section_size",
-        "section_leading",
-        "subsection_size",
-        "heading_size",
-        "heading_leading",
-        "meta_size",
-        "meta_leading",
-        "tech_size",
-        "small_size",
-        "small_leading",
-        "footer_font_size",
-        "section_rule_thickness"
-    }
-
-    for name in positive_typography_fields:
+    for name in POSITIVE_TYPOGRAPHY_FIELDS:
         value = getattr(config.typography, name)
         if value <= 0:
             raise ValueError(
