@@ -32,7 +32,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--cv",
         type=Path,
-        default=PROJECT_DIR / "data" / "cv.example.json",
+        default=PROJECT_DIR / "data" / "cv_data.example.json",
         help="Path to the CV JSON file.",
     )
     parser.add_argument(
