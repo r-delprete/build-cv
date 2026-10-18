@@ -1,3 +1,4 @@
+
 import argparse
 from pathlib import Path
 
@@ -31,7 +32,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--cv",
         type=Path,
-        default=PROJECT_DIR / "data" / "cv_data.example.json",
+        default=PROJECT_DIR / "data" / "cv.example.json",
         help="Path to the CV JSON file.",
     )
     parser.add_argument(
@@ -50,45 +51,37 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def main():
-    register_fonts()
+def main() -> None:
+    """Generate a CV PDF from JSON data."""
 
     args = parse_args()
+
+    register_fonts()
     cv = load_cv(args.cv)
 
     story = []
 
-    # ---- header
+    # Header
     profile_photo = create_profile_photo(photo_path=args.photo)
     story.extend(build_header(cv.personal, profile_photo))
 
-    # ---- profile
+    # Profile and CV sections
     story.extend(build_profile(cv.profile))
-
-    # ---- experience
     story.extend(build_experience(cv.experience))
-
-    # ---- skills
     story.extend(build_skills(cv.skills))
-
-    # ---- education
     story.extend(build_education(cv.education))
-
-    # ---- courses
     story.extend(build_courses(cv.courses))
-
-    # ---- publications
     story.extend(build_publications(cv.publications))
-
-    # ---- languages
     story.extend(build_languages(cv.languages))
-
-    # ---- soft skills
     story.extend(build_soft_skills(cv.soft_skills))
 
     if cv.privacy_note:
-        story.extend([Spacer(1, LAYOUT.final_note_gap),
-                      Paragraph(cv.privacy_note, small)])
+        story.extend(
+            [
+                Spacer(1, LAYOUT.final_note_gap),
+                Paragraph(cv.privacy_note, small),
+            ]
+        )
 
     doc = create_document(cv, args.output)
     doc.build(story)
