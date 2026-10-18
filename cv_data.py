@@ -5,7 +5,6 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Generic, TypedDict, TypeVar
 
-
 T = TypeVar("T")
 S = TypeVar("S", bound="Section[Any]")
 
@@ -199,21 +198,21 @@ class CV:
 def _require_object(value: Any, context: str) -> dict[str, Any]:
     """Return a JSON object or raise an informative error."""
     if not isinstance(value, dict):
-        raise ValueError(f"'{context}' must be a JSON object.")
+        raise TypeError(f"'{context}' must be a JSON object.")
     return value
 
 
 def _require_string(value: Any, context: str) -> str:
     """Return a string or raise an informative error."""
     if not isinstance(value, str):
-        raise ValueError(f"'{context}' must be a string.")
+        raise TypeError(f"'{context}' must be a string.")
     return value
 
 
 def _require_string_list(value: Any, context: str) -> list[str]:
     """Validate a list containing only strings."""
     if not isinstance(value, list):
-        raise ValueError(f"'{context}' must be a list.")
+        raise TypeError(f"'{context}' must be a list.")
 
     for index, item in enumerate(value):
         _require_string(item, f"{context}[{index}]")
@@ -254,7 +253,7 @@ def _load_section(
     items = section_data["data"]
 
     if not isinstance(items, list):
-        raise ValueError(f"'{section_name}.data' must be a list.")
+        raise TypeError(f"'{section_name}.data' must be a list.")
 
     converted_items = []
 
@@ -372,7 +371,7 @@ def _load_publication_data(item: dict[str, Any]) -> PublicationData:
     authors = item.get("authors")
 
     if not isinstance(authors, list):
-        raise ValueError("'publication.authors' must be a list.")
+        raise TypeError("'publication.authors' must be a list.")
 
     converted_authors = []
 
@@ -419,7 +418,7 @@ def _load_personal_info(value: Any) -> PersonalInfo:
     links = data.get("links")
 
     if not isinstance(links, list):
-        raise ValueError("'personal.links' must be a list.")
+        raise TypeError("'personal.links' must be a list.")
 
     converted_links = []
 
