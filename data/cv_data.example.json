@@ -1,0 +1,222 @@
+{
+  "meta": {
+    "title": "Curriculum Vitae – Example",
+    "description": "Example curriculum vitae for the CV Builder application",
+    "author": "Mario Rossi"
+  },
+  "personal": {
+    "name": "Mario Rossi",
+    "role": "Full Stack Developer",
+    "email": "mario.rossi@example.com",
+    "phone": "+39 000 000 0000",
+    "links": [
+      {
+        "type": "linkedin",
+        "url": "https://www.linkedin.com/in/example-profile/"
+      },
+      {
+        "type": "github",
+        "url": "https://github.com/example-user"
+      }
+    ]
+  },
+  "profile": {
+    "title": "Profilo professionale",
+    "text": "Sviluppatore software con esperienza nella progettazione e realizzazione di applicazioni web. Mi occupo di sviluppo frontend e backend, gestione dei database e manutenzione delle applicazioni. Sono abituato a lavorare in team, analizzare requisiti e individuare soluzioni tecniche efficaci."
+  },
+  "experience": {
+    "section_title": "Esperienza professionale",
+    "data": [
+      {
+        "company": "Example Tech S.R.L.",
+        "role": "Full Stack Developer",
+        "start_date": "01/2024",
+        "responsibilities": [
+          "Sviluppo e manutenzione di applicazioni web per clienti aziendali.",
+          "Progettazione di API e integrazione con database relazionali.",
+          "Collaborazione con il team per analisi dei requisiti, test e rilascio delle funzionalità."
+        ],
+        "projects": {
+          "section_title": "Progetti principali",
+          "data": [
+            {
+              "title": "Sviluppo di una piattaforma gestionale",
+              "client": "Example Client S.P.A.",
+              "responsibilities": [
+                "Realizzazione di interfacce web responsive.",
+                "Sviluppo di servizi backend e integrazione con il database.",
+                "Manutenzione e ottimizzazione delle funzionalità esistenti."
+              ],
+              "technologies": [
+                "Python",
+                "React",
+                "PostgreSQL",
+                "Docker"
+              ]
+            },
+            {
+              "title": "Sviluppo di dashboard aziendali",
+              "client": "Example Group",
+              "responsibilities": [
+                "Implementazione di dashboard per la consultazione dei dati.",
+                "Sviluppo di filtri, report e funzionalità di esportazione."
+              ],
+              "technologies": [
+                "Vue.js",
+                "TypeScript",
+                "SQL"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "company": "Digital Solutions S.R.L.",
+        "role": "Junior Software Developer",
+        "start_date": "06/2022",
+        "end_date": "12/2023",
+        "responsibilities": [
+          "Sviluppo di funzionalità per applicazioni web.",
+          "Correzione di bug e supporto alla manutenzione del software.",
+          "Utilizzo di Git per la gestione del codice sorgente e la collaborazione."
+        ],
+        "projects": {
+          "section_title": "Progetti principali",
+          "data": [
+            {
+              "title": "Applicazione interna per la gestione dei dati",
+              "client": "Digital Solutions S.R.L.",
+              "responsibilities": [
+                "Implementazione di funzionalità CRUD.",
+                "Realizzazione di query SQL e controlli di validazione."
+              ],
+              "technologies": [
+                "JavaScript",
+                "Python",
+                "SQLite",
+                "Git"
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "skills": {
+    "section_title": "Competenze tecniche",
+    "data": [
+      {
+        "category": "Front-end",
+        "items": [
+          "HTML",
+          "CSS",
+          "JavaScript",
+          "TypeScript",
+          "React"
+        ]
+      },
+      {
+        "category": "Back-end e database",
+        "items": [
+          "Python",
+          "Node.js",
+          "SQL",
+          "PostgreSQL"
+        ]
+      },
+      {
+        "category": "Strumenti e ambienti",
+        "items": [
+          "Git",
+          "Docker",
+          "Visual Studio Code",
+          "Linux"
+        ]
+      }
+    ]
+  },
+  "education": {
+    "section_title": "Formazione",
+    "data": [
+      {
+        "title": "Laurea Triennale in Informatica",
+        "institution": "Università degli Studi di Example",
+        "start_date": "2020",
+        "end_date": "2023"
+      },
+      {
+        "title": "Diploma in Informatica",
+        "institution": "Istituto Tecnico Example",
+        "start_date": "2015",
+        "end_date": "2020"
+      }
+    ]
+  },
+  "courses": {
+    "section_title": "Corsi e certificazioni",
+    "data": [
+      {
+        "title": "Corso di sviluppo web",
+        "institution": "Example Academy",
+        "start_date": "02/2023",
+        "end_date": "04/2023",
+        "description": "Fondamenti di sviluppo frontend e backend, progettazione di API e gestione di database relazionali."
+      },
+      {
+        "title": "Introduzione a Docker",
+        "institution": "Example Training",
+        "start_date": "05/2023",
+        "end_date": "05/2023",
+        "description": "Principi di containerizzazione, creazione di immagini e gestione degli ambienti di sviluppo."
+      }
+    ]
+  },
+  "publications": {
+    "section_title": "Pubblicazioni",
+    "data": [
+      {
+        "authors": [
+          {
+            "name": "Rossi, M.",
+            "is_me": true
+          },
+          {
+            "name": "Bianchi, L.",
+            "is_me": false
+          },
+          {
+            "name": "Verdi, A.",
+            "is_me": false
+          }
+        ],
+        "title": "An Example Study on Modern Software Development",
+        "status": "Pubblicato",
+        "event": "Example Conference 2025",
+        "location": "Roma",
+        "date": "settembre 2025"
+      }
+    ]
+  },
+  "languages": {
+    "section_title": "Lingue",
+    "data": [
+      {
+        "name": "Italiano",
+        "level": "madrelingua"
+      },
+      {
+        "name": "Inglese",
+        "level": "B2"
+      }
+    ]
+  },
+  "soft_skills": {
+    "section_title": "Competenze trasversali",
+    "data": [
+      {
+        "description": "Buone capacità comunicative e collaborative, orientamento agli obiettivi, autonomia nella gestione delle attività e attitudine al problem solving."
+      }
+    ]
+  },
+  "privacy_note": "Autorizzo il trattamento dei dati personali contenuti nel presente CV per le finalità previste dalla normativa applicabile in materia di protezione dei dati personali."
+}
