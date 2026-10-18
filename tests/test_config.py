@@ -47,7 +47,7 @@ def test_reject_unsupported_page_size(monkeypatch, tmp_path):
         encoding="utf-8",
     )
 
-    with pytest.raises(ValueError, match="Page format not supported"):
+    with pytest.raises(ValueError, match="Unsupported page format"):
         config.load_config(invalid_path)
 
 
